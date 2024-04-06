@@ -1,0 +1,29 @@
+{
+  "name": "nwlunitenodejs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn install && yarn prisma generate && yarn tsc",
+    "start": "node ./dist/server.js",
+    "dev": "tsx watch --env-file .env ./src/server.ts",
+    "lint": "eslint \"{src}/**/*.ts\" --fix",
+    "format": "prettier --write \"src/**/*.ts\""
+  },
+  "dependencies": {
+    "@fastify/cors": "^9.0.1",
+    "@prisma/client": "^5.12.1",
+    "dotenv": "^16.4.5",
+    "fastify": "^4.26.2",
+    "prisma": "^5.12.1",
+    "tsc": "^2.0.4",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.5.0",
+    "@typescript-eslint/parser": "^7.5.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.2.5",
+    "tsx": "^4.7.2"
+  }
+}
