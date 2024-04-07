@@ -33,4 +33,15 @@ export default class AttendeeRepository {
 			return error as any;
 		}
 	}
+	async getAttendees(id: string): Promise<Attendee[] | string> {
+		try {
+			const event = await prisma.event.findUnique({ where: { id } });
+
+			if (!event) return "Não exite um evento com esse id";
+
+			return await prisma.attendee.findMany({ where: { eventId: id } });
+		} catch (error) {
+			return error as string;
+		}
+	}
 }

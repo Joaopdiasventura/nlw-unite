@@ -20,4 +20,21 @@ export default class AttendeeController {
 			return { statusCode: 500, body: { message: error as string } };
 		}
 	}
+	async getAttendees(id: string): Promise<HttpResponse<Attendee[]>> {
+		try {
+			const result = await this.repository.getAttendees(id);
+			if (typeof result == "string")
+				return { statusCode: 400, body: { message: result } };
+
+			return {
+				statusCode: 200,
+				body: result,
+			};
+		} catch (error) {
+			return {
+				statusCode: 500,
+				body: { message: error as string },
+			};
+		}
+	}
 }

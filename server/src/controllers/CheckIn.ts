@@ -31,4 +31,21 @@ export default class CheckInController {
 			};
 		}
 	}
+	async getCheckIns(id: string): Promise<HttpResponse<CheckIn[]>> {
+		try {
+			const result = await this.repository.getCheckIns(id);
+			if (typeof result == "string")
+				return { statusCode: 400, body: { message: result } };
+
+			return {
+				statusCode: 200,
+				body: result,
+			};
+		} catch (error) {
+			return {
+				statusCode: 500,
+				body: { message: error as string },
+			};
+		}
+	}
 }

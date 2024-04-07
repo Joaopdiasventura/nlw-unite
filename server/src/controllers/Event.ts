@@ -5,7 +5,7 @@ import { HttpResponse, verifyFields } from "./protocols";
 
 export default class EventController {
 	constructor(private readonly repository: EventRepository) {}
-	async getAll() {
+	async getAll(): Promise<Event[]> {
 		return await this.repository.getAll();
 	}
 	async create(dto: CreateEventDto): Promise<HttpResponse<Event>> {

@@ -3,7 +3,9 @@ import CheckInRepository from "../repository/CheckIn";
 import CheckInController from "../controllers/CheckIn";
 import CheckInDto from "../dtos/CheckIn";
 
-export default async function CheckInRoute(app: FastifyInstance): Promise<void> {
+export default async function CheckInRoute(
+	app: FastifyInstance,
+): Promise<void> {
 	const repository = new CheckInRepository();
 	const controller = new CheckInController(repository);
 	app.post("/", async (request, reply) => {
@@ -15,6 +17,16 @@ export default async function CheckInRoute(app: FastifyInstance): Promise<void> 
 			return reply.status(statusCode).send(body);
 		} catch (error) {
 			console.log(error);
+			return reply.status(500).send(error);
+		}
+	});
+	app.get("/:eventId", async (request, reply) => {
+		const { eventId } = request.params as CheckInDto;
+		try {
+			const { statusCode, body } = await controller.getCheckIns(eventId);
+
+			return reply.status(statusCode).send(body);
+		} catch (error) {
 			return reply.status(500).send(error);
 		}
 	});

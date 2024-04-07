@@ -30,4 +30,15 @@ export default class CheckInRepository {
 			return error as string;
 		}
 	}
+	async getCheckIns(id: string): Promise<CheckIn[] | string> {
+		try {
+			const event = await prisma.event.findUnique({ where: { id } });
+
+			if (!event) return "Não exite um evento com esse id";
+
+			return await prisma.checkIn.findMany({ where: { eventId: id } });
+		} catch (error) {
+			return error as string;
+		}
+	}
 }
