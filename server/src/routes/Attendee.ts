@@ -2,7 +2,7 @@ import { FastifyInstance } from "fastify";
 import RegisterAttendeeDto from "../dtos/registerAttendee";
 import AttendeeRepository from "../repository/Attendee";
 import AttendeeController from "../controllers/Attendee";
-import GetAttendeesDto from "../dtos/getAttendees";
+import { GetAttendeesDto } from "../dtos/getAttendees";
 
 export default async function AttendeeRoute(
 	app: FastifyInstance,

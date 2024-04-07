@@ -1,4 +1,4 @@
-import GetAttendeesDto from "../dtos/getAttendees";
+import { GetAttendeesDto, GetAllResponse } from "../dtos/getAttendees";
 import RegisterAttendeeDto from "../dtos/registerAttendee";
 import Attendee from "../models/Attendee";
 import AttendeeRepository from "../repository/Attendee";
@@ -21,7 +21,9 @@ export default class AttendeeController {
 			return { statusCode: 500, body: { message: error as string } };
 		}
 	}
-	async getAttendees(dto: GetAttendeesDto): Promise<HttpResponse<Attendee[]>> {
+	async getAttendees(
+		dto: GetAttendeesDto,
+	): Promise<HttpResponse<GetAllResponse>> {
 		dto.id = parseInt(`${dto.id}`);
 		try {
 			const result = await this.repository.getAttendees(dto);

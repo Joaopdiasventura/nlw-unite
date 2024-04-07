@@ -1,4 +1,4 @@
-import GetAttendeesDto from "../dtos/getAttendees";
+import { GetAttendeesDto, GetAllResponse } from "../dtos/getAttendees";
 import RegisterAttendeeDto from "../dtos/registerAttendee";
 import Attendee from "../models/Attendee";
 import { prisma } from "../services/prisma";
@@ -29,14 +29,14 @@ export default class AttendeeRepository {
 				return "Esse email já está cadastrado para esse evento";
 
 			console.log(dto);
-			
+
 			return await prisma.attendee.create({ data: { ...dto } });
 		} catch (error) {
 			console.log(error);
 			return error as any;
 		}
 	}
-	async getAttendees(dto: GetAttendeesDto): Promise<Attendee[] | string> {
+	async getAttendees(dto: GetAttendeesDto): Promise<GetAllResponse | string> {
 		const { id, page } = dto;
 		try {
 			const event = await prisma.event.findUnique({ where: { id } });
@@ -45,8 +45,12 @@ export default class AttendeeRepository {
 
 			const attendees: Attendee[] = await prisma.attendee.findMany({
 				where: { eventId: id },
-				skip: (page * 5),
+				skip: page * 5,
 				take: 5,
+			});
+
+			const length = await prisma.attendee.count({
+				where: { eventId: id },
 			});
 
 			for (let i = 0; i < attendees.length; i++) {
@@ -60,7 +64,10 @@ export default class AttendeeRepository {
 				)?.createdAt;
 			}
 
-			return attendees;
+			return {
+				attendees,
+				length,
+			};
 		} catch (error) {
 			return error as string;
 		}
