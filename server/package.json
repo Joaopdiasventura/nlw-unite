@@ -17,6 +17,7 @@
     "fastify": "^4.26.2",
     "prisma": "^5.12.1",
     "tsc": "^2.0.4",
+    "typescript": "^5.4.4",
     "zod": "^3.22.4"
   },
   "devDependencies": {
