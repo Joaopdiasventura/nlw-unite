@@ -37,14 +37,14 @@ export default class AttendeeRepository {
 		}
 	}
 	async getAttendees(dto: GetAttendeesDto): Promise<GetAllResponse | string> {
-		const { id, page } = dto;
+		const { id, page, name } = dto;
 		try {
 			const event = await prisma.event.findUnique({ where: { id } });
 
 			if (!event) return "Não exite um evento com esse id";
 
 			const attendees: Attendee[] = await prisma.attendee.findMany({
-				where: { eventId: id },
+				where: { eventId: id, name: {contains: name} },
 				skip: page * 5,
 				take: 5,
 			});
