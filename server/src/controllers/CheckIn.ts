@@ -7,7 +7,7 @@ export default class CheckInController {
 	constructor(private readonly repository: CheckInRepository) {}
 	async check(dto: CheckInDto): Promise<HttpResponse<CheckIn>> {
 		try {
-			const verified = verifyFields(["attendeeEmail", "eventId"], dto);
+			const verified = verifyFields(["attendeeId", "eventId"], dto);
 
 			if (verified) return verified;
 
