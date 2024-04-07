@@ -25,18 +25,20 @@ const app = axios.create({
 });
 
 export function AttendeeList() {
-  const [page, setPage] = useState(1);
-  const [attendees, setAttendees] = useState<Attendee[]>([]);
 
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState(" ");
+
+  const [attendees, setAttendees] = useState<Attendee[]>([]);
   const [attendeesLength, setLength] = useState(0);
 
   const totalPages = Math.ceil(attendeesLength / 5);
 
   const onSearchInputChanged = async (event: ChangeEvent<HTMLInputElement>) => {
     const url = new URL(window.location.toString());
-    url.searchParams.set("name", String(event.target.value));
+    url.searchParams.set("name", event.target.value);
     window.history.pushState({}, "", url);
-    getAttendees();
+    await getAttendees();
   };
 
   const goToPage = (newPage: number) => {
@@ -74,6 +76,7 @@ export function AttendeeList() {
     setAttendees(result.attendees);
     setLength(result.length);
     setPage(Page);
+    setSearch(Name);
   };
 
   useEffect(() => {
@@ -91,6 +94,7 @@ export function AttendeeList() {
             className="bg-transparent focus:ring-0 flex-1 outline-none border-0 p-0 text-sm"
             type="text"
             placeholder="Buscar participante:"
+            value={search}
           />
         </div>
       </div>
