@@ -39,7 +39,21 @@ export default class AttendeeRepository {
 
 			if (!event) return "Não exite um evento com esse id";
 
-			return await prisma.attendee.findMany({ where: { eventId: id } });
+			const attendees: Attendee[] = await prisma.attendee.findMany({
+				where: { eventId: id },
+			});
+			for (let i = 0; i < attendees.length; i++) {
+				attendees[i].checkedInAt = (
+					await prisma.checkIn.findFirst({
+						where: {
+							attendeeEmail: attendees[i].email,
+							eventId: id,
+						},
+					})
+				)?.createdAt;
+			}
+
+			return attendees;
 		} catch (error) {
 			return error as string;
 		}

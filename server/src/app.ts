@@ -15,7 +15,7 @@ const corsOptions = {
 
 app.register(cors, corsOptions);
 
-app.register(EventRoute, { prefix: "/slug" });
+app.register(EventRoute, { prefix: "/event" });
 app.register(AttendeeRoute, { prefix: "/attendee" });
 app.register(CheckInRoute, { prefix: "/check" });
 

@@ -3,4 +3,5 @@ export default interface Attendee {
 	email: string;
 	createdAt: Date;
 	eventId: string;
+	checkedInAt?: Date;
 }
