@@ -11,6 +11,9 @@ export default class CheckInController {
 
 			if (verified) return verified;
 
+			dto.attendeeId = parseInt(`${dto.attendeeId}`);
+			dto.eventId = parseInt(`${dto.eventId}`);
+
 			const result = await this.repository.check(dto);
 
 			if (typeof result == "string")
