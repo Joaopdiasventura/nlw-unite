@@ -1,6 +1,6 @@
 export default interface CheckIn {
-	id: string;
+	id: number;
 	createdAt: Date;
-	attendeeEmail: string;
-	eventId: string;
+	attendeeId: number;
+	eventId: number;
 }

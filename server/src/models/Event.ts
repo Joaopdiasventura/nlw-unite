@@ -1,5 +1,5 @@
 export default interface Event {
-	id: string;
+	id: number;
 	title: string;
 	details: string;
 	slug: string;

@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 import RegisterAttendeeDto from "../dtos/registerAttendee";
 import AttendeeRepository from "../repository/Attendee";
 import AttendeeController from "../controllers/Attendee";
+import GetAttendeesDto from "../dtos/getAttendees";
 
 export default async function AttendeeRoute(
 	app: FastifyInstance,
@@ -18,10 +19,10 @@ export default async function AttendeeRoute(
 			return reply.status(500).send(error);
 		}
 	});
-	app.get("/:eventId", async (request, reply) => {
-		const { eventId } = request.params as RegisterAttendeeDto;
+	app.get("/:eventId/:page", async (request, reply) => {
+		const Params = request.params as GetAttendeesDto;
 		try {
-			const { statusCode, body } = await controller.getAttendees(eventId);
+			const { statusCode, body } = await controller.getAttendees(Params);
 
 			return reply.status(statusCode).send(body);
 		} catch (error) {

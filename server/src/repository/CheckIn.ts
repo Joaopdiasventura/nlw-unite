@@ -6,7 +6,7 @@ export default class CheckInRepository {
 	async check(dto: CheckInDto): Promise<CheckIn | string> {
 		try {
 			const attendee = await prisma.attendee.findUnique({
-				where: { email: dto.attendeeEmail, eventId: dto.eventId },
+				where: { id: dto.attendeeId, eventId: dto.eventId },
 			});
 
 			if (!attendee) return "Esse email não está cadastrado no sistema";
@@ -30,7 +30,7 @@ export default class CheckInRepository {
 			return error as string;
 		}
 	}
-	async getCheckIns(id: string): Promise<CheckIn[] | string> {
+	async getCheckIns(id: number): Promise<CheckIn[] | string> {
 		try {
 			const event = await prisma.event.findUnique({ where: { id } });
 

@@ -31,7 +31,7 @@ export default class CheckInController {
 			};
 		}
 	}
-	async getCheckIns(id: string): Promise<HttpResponse<CheckIn[]>> {
+	async getCheckIns(id: number): Promise<HttpResponse<CheckIn[]>> {
 		try {
 			const result = await this.repository.getCheckIns(id);
 			if (typeof result == "string")

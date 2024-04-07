@@ -1,7 +1,8 @@
 export default interface Attendee {
+	id: number;
 	name: string;
 	email: string;
 	createdAt: Date;
-	eventId: string;
+	eventId: number;
 	checkedInAt?: Date;
 }

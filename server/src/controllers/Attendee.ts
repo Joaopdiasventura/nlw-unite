@@ -1,3 +1,4 @@
+import GetAttendeesDto from "../dtos/getAttendees";
 import RegisterAttendeeDto from "../dtos/registerAttendee";
 import Attendee from "../models/Attendee";
 import AttendeeRepository from "../repository/Attendee";
@@ -20,9 +21,9 @@ export default class AttendeeController {
 			return { statusCode: 500, body: { message: error as string } };
 		}
 	}
-	async getAttendees(id: string): Promise<HttpResponse<Attendee[]>> {
+	async getAttendees(dto: GetAttendeesDto): Promise<HttpResponse<Attendee[]>> {
 		try {
-			const result = await this.repository.getAttendees(id);
+			const result = await this.repository.getAttendees(dto);
 			if (typeof result == "string")
 				return { statusCode: 400, body: { message: result } };
 

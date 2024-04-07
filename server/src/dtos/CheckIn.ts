@@ -1,4 +1,4 @@
 export default interface CheckInDto {
-	attendeeEmail: string;
-	eventId: string;
+	attendeeId: number;
+	eventId: number;
 }
