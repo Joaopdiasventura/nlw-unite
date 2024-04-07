@@ -19,7 +19,7 @@ export default async function AttendeeRoute(
 			return reply.status(500).send(error);
 		}
 	});
-	app.get("/:eventId/:page", async (request, reply) => {
+	app.get("/:id/:page", async (request, reply) => {
 		const Params = request.params as GetAttendeesDto;
 		try {
 			const { statusCode, body } = await controller.getAttendees(Params);

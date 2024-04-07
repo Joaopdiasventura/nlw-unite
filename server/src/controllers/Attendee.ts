@@ -22,6 +22,7 @@ export default class AttendeeController {
 		}
 	}
 	async getAttendees(dto: GetAttendeesDto): Promise<HttpResponse<Attendee[]>> {
+		dto.id = parseInt(`${dto.id}`);
 		try {
 			const result = await this.repository.getAttendees(dto);
 			if (typeof result == "string")
