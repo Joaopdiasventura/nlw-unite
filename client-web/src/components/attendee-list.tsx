@@ -36,15 +36,13 @@ export function AttendeeList() {
 
   const onSearchInputChanged = async (event: ChangeEvent<HTMLInputElement>) => {
     const url = new URL(window.location.toString());
-    url.searchParams.set("name", event.target.value);
-    window.history.pushState({}, "", url);
-    await getAttendees();
+    setSearch(event.target.value.trim());
+    url.searchParams.set("name", event.target.value.trim());
   };
 
   const goToPage = (newPage: number) => {
     const url = new URL(window.location.toString());
     url.searchParams.set("page", String(newPage));
-    window.history.pushState({}, "", url);
     setPage(newPage);
   };
 
@@ -68,20 +66,22 @@ export function AttendeeList() {
 
   const getAttendees = async () => {
     const url = new URL(window.location.toString());
-    const Page = parseInt(`${url.searchParams.get("page") != null ? url.searchParams.get("page") : "0"}`);
-    const Name = `${url.searchParams.get("name") != null ?url.searchParams.get("name") : " "}`
-    const result = await app
-      .get(`/attendee/all/1/${Page - 1}/${Name}`)
-      .then((Result) => Result.data);
+    url.searchParams.set("page", String(page));
+    url.searchParams.set("name", search);
+    const Page = parseInt(`${url.searchParams.get("page") != null ? url.searchParams.get("page") : "1"}`);
+    const Name = `${url.searchParams.get("name") != null ? url.searchParams.get("name") : " "}`
+    const urlRequest = `/attendee/all/1/${Page - 1}/${Name}`;
+
+    console.log(urlRequest);
+    
+    const result = await app.get(urlRequest).then((Result) => Result.data);
     setAttendees(result.attendees);
     setLength(result.length);
-    setPage(Page);
-    setSearch(Name);
   };
 
   useEffect(() => {
     getAttendees();
-  }, [page]);
+  }, [page, search]);
 
   return (
     <div className="flex flex-col gap-4">
