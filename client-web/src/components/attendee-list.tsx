@@ -70,10 +70,7 @@ export function AttendeeList() {
     url.searchParams.set("name", search);
     const Page = parseInt(`${url.searchParams.get("page") != null ? url.searchParams.get("page") : "1"}`);
     const Name = `${url.searchParams.get("name") != null ? url.searchParams.get("name") : " "}`
-    const urlRequest = `/attendee/all/1/${Page - 1}/${Name}`;
-
-    console.log(urlRequest);
-    
+    const urlRequest = `/attendee/all/1/${Page - 1}/${Name}`;    
     const result = await app.get(urlRequest).then((Result) => Result.data);
     setAttendees(result.attendees);
     setLength(result.length);
